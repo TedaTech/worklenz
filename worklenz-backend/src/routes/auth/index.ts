@@ -42,7 +42,7 @@ authRouter.get("/google", (req, res) => {
   })(req, res);
 });
 
-authRouter.get("/google/verify", (req, res) => {
+authRouter.get("/google/verify", (req, res, err) => {
   let error = "";
   if ((req.session as any).error) {
     error = `?error=${encodeURIComponent((req.session as any).error as string)}`;
@@ -53,7 +53,7 @@ authRouter.get("/google/verify", (req, res) => {
   return passport.authenticate("google", {
     failureRedirect,
     successRedirect: process.env.LOGIN_SUCCESS_REDIRECT
-  })(req, res);
+  })(req, res, err);
 });
 
 // Mobile Google Sign-In using Passport strategy
