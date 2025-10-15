@@ -17,7 +17,7 @@ import apiRouter from "./routes/apis";
 import authRouter from "./routes/auth";
 import emailTemplatesRouter from "./routes/email-templates";
 import public_router from "./routes/public";
-import { isInternalServer, isProduction } from "./shared/utils";
+import { isInternalServer, isProduction, log_error } from "./shared/utils";
 import sessionMiddleware from "./middlewares/session-middleware";
 import safeControllerFunction from "./shared/safe-controller-function";
 import AwsSesController from "./controllers/aws-ses-controller";
@@ -221,6 +221,8 @@ app.get("*", (req: Request, res: Response, next: NextFunction) => {
 // Global error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   const status = err.status || 500;
+
+  log_error(err, null, true);
 
   if (res.headersSent) {
     return;
