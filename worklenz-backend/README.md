@@ -23,6 +23,7 @@ Update the `.env` file with your specific configuration. Key variables include:
 - **Database**: `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_HOST`, `DB_PORT`
 - **Server**: `PORT`, `NODE_ENV`, `SESSION_SECRET`, `COOKIE_SECRET`
 - **Frontend**: `FRONTEND_URL`, `SERVER_CORS`
+- **Email**: Configure SMTP or AWS SES (see Email Configuration section below)
 - **Storage**: Configure either S3 or Azure Blob Storage
 - **Authentication**: Google OAuth credentials if needed
 
@@ -112,6 +113,31 @@ The API follows RESTful design principles with endpoints prefixed with `/api/`.
 ### Authentication
 
 The API uses JWT tokens for authentication. Protected routes require a valid token in the Authorization header.
+
+### Email Configuration
+
+Configure email delivery via SMTP or AWS SES in your `.env` file.
+
+**SMTP** (Gmail, Outlook, SendGrid, Mailgun, etc.):
+```bash
+EMAIL_PROVIDER=smtp
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+EMAIL_FROM_NAME=Worklenz
+EMAIL_FROM_ADDRESS=noreply@yourdomain.com
+```
+
+**AWS SES**:
+```bash
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+```
+
+**Note**: Existing AWS SES deployments automatically use SES when AWS credentials are present. Set `EMAIL_PROVIDER=smtp` to explicitly use SMTP instead.
 
 ### File Storage
 
